@@ -1,27 +1,43 @@
 # Solski-projekt
-Aplikacija za upravljanje nalog v restavraciji
 
-Želim razviti aplikacijo, ki bo restavracijam omogočila enostavno in učinkovito upravljanje nalog vseh zaposlenih, kot so kuharji, natakarji in valet. Vsaka vloga bo imela svoj prilagojen uporabniški vmesnik, kar bo omogočilo boljšo organizacijo, večjo produktivnost in boljšo komunikacijo znotraj ekipe.
+Razvijam celovito aplikacijo za restavracije, ki omogoča učinkovito upravljanje zaposlenih in izboljšano izkušnjo za goste. Vsak zaposleni ima prilagojen uporabniški vmesnik glede na svojo vlogo, vse funkcionalnosti pa so povezane v enoten sistem, ki zagotavlja tekoče delovanje restavracije in optimizacijo storitev.
 
-Ključne funkcionalnosti:
+Glavne funkcionalnosti po vlogah:
+Natakar
+Pregled vseh aktivnih miz z možnostjo upravljanja posamezne mize.
+Sprejemanje in urejanje naročil s posredovanjem v kuhinjo.
+Prejem obvestil, ko je jed pripravljena za postrežbo.
+Obveščanje strank o statusu njihovega naročila.
 
-Valet: Ob prihodu stranke vpišem podatke o njenem avtomobilu (znamka, model, registrska številka) in jih shranim v sistem. Ko stranka zapusti restavracijo, arhiviramo te podatke.
+Kuhar
+Seznam aktivnih naročil s časovnimi oznakami in statusom.
+Možnost ogleda receptov za pripravo posamezne jedi.
+Označevanje dokončanih jedi, kar sproži obvestilo natakarju.
+Obveščanje vodje o pomanjkanju sestavin ali drugih težavah.
 
-Natakar: Sprejmem naročila strank, jih posredujem kuharjem, spremljam, katere jedi so pripravljene, in obveščam stranke, ko je njihovo naročilo pripravljeno.
+Vodja restavracije
+Upravljanje urnikov in dodeljevanje izmenskega dela zaposlenim.
+Sledenje uspešnosti posameznih delavcev z možnostjo dodeljevanja nagrad.
+Statistična poročila o učinkovitosti, naročilih in zadovoljstvu strank.
+Spremljanje komunikacije in hitra intervencija ob težavah.
 
-Kuhar: Sprejmem naročila, pripravim jedi in označim tiste, ki so pripravljene, kar omogoča natakarjem, da jih dostavijo strankam.
+Skupne funkcionalnosti
+Interni klepet
+Vgrajen sistem za klepetanje med zaposlenimi (npr. kuharji ↔ natakarji ↔ vodja), za hitro in učinkovito komunikacijo.
+Sledenje in arhiviranje
+Vse aktivnosti se beležijo in arhivirajo v SQL bazi za kasnejšo analizo in optimizacijo poslovanja.
 
-Poročila in analitika: Aplikacija omogoča sledenje učinkovitosti restavracije, prihodkov, števila strank in povratnih informacij, kar pomaga pri optimizaciji dela in izboljšavah storitev.
+Funkcionalnosti za stranko (gost)
+Klic natakarja preko aplikacije ali QR kode na mizi.
+Oddaja naročila neposredno prek aplikacije (po izbiri restavracije).
+Spremljanje naročila z napredkom priprave (vizualno prikazano kot "progress bar").
+Pregled parkirišča z dostopom do kamer, ki snemajo njihov avtomobil.
 
-Prednosti aplikacije:
+Prednosti aplikacije
+Poenostavljena komunikacija in večja organiziranost znotraj ekipe.
+Večja preglednost nad delovanjem restavracije.
+Hitrejša obdelava naročil in boljša izkušnja za stranko.
+Avtomatizirano arhiviranje podatkov omogoča dolgoročno analizo in optimizacijo procesov.
 
-Poenostavi komunikacijo med zaposlenimi in omogoči boljšo organizacijo nalog.
-
-Omogoči sledenje nalogam v realnem času in boljše usklajevanje.
-
-Hitrejša in bolj natančna obdelava naročil.
-
-Arhiviranje podatkov omogoča kasnejšo analizo in optimizacijo procesov v restavraciji.
-
-Aplikacija bo enostavna za uporabo, vsak zaposleni pa bo imel dostop le do tistega, kar je relevantno za njegovo delo, kar bo še dodatno izboljšalo produktivnost in zadovoljstvo strank.
-
+slabosti: prevelik korak za eno osebo.
+konkurence: obstajajo, vendar niso skupaj, stranka bi morala delati s več ponudniki. Moja aplikacija naj bi bila celotna.
