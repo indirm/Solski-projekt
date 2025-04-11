@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dobrodošli - Stranka</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('/static/slike/stranka.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #00796B;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            background-color: #00796B;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #004D40;
+        }
+
+        .id-display {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            color: #00796B;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dobrodošli! Pritisnite za številko</h1>
+        <button onclick="getCustomerNumber()">Dobi Številko</button>
+        <div id="idDisplay" class="id-display"></div>
+    </div>
+
+    <script>
+        async function getCustomerNumber() {
+            const response = await fetch("/get_number", {
+                method: "POST"
+            });
+            const data = await response.json();
+
+            const idDisplay = document.getElementById("idDisplay");
+            idDisplay.style.display = "block";
+            idDisplay.textContent = "Vaša številka: " + data.number;
+        }
+    </script>
+</body>
+</html>
