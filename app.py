@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 app.secret_key = "your_secret_key"
 
-
 COOK_USERNAME = "cook"
 COOK_PASSWORD = "1234"
 
@@ -19,7 +18,7 @@ if len(db) == 0:
 
 @app.route('/')
 def domov():
-    return render_template('stranka.html')
+    return render_template('stranka-start.html')
 
 @app.route("/get_number", methods=["POST"])
 def get_number():
@@ -39,6 +38,10 @@ def release_table(table_id):
     else:
         return jsonify({"error": "Miza s tem ID-jem ne obstaja!"}), 404
 
+@app.route("/get_tables")
+def get_tables():
+    return jsonify({"tables": db.all()})
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -53,14 +56,14 @@ def login():
 
     return render_template("login.html")
 
-# Protected cook dashboard
+
 @app.route("/cook")
 def cook_dashboard():
     if not session.get("cook_logged_in"):
         return redirect(url_for("login"))
     return "Dobrodošel kuhar! Tukaj bo seznam naročil."
 
-# Logout route
+
 @app.route("/logout")
 def logout():
     session.pop("cook_logged_in", None)

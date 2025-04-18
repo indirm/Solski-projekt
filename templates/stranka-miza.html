@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregled Miz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1F1F1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00796B;
+            margin-bottom: 30px;
+        }
+
+        .table-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .table-card {
+            background: white;
+            border: 2px solid #00796B;
+            border-radius: 12px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .table-card h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .table-card p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .done-btn {
+            background-color: #00796B;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .done-btn:hover {
+            background-color: #004D40;
+        }
+
+        .free {
+            color: green;
+            font-weight: bold;
+        }
+
+        .taken {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Seznam Miz</h1>
+
+    <div class="table-list" id="tableList"></div>
+
+    <script>
+        async function fetchTables() {
+            const response = await fetch("/get_tables");
+            const data = await response.json();
+
+            const container = document.getElementById("tableList");
+            container.innerHTML = "";
+
+            data.tables.forEach(table => {
+                const card = document.createElement("div");
+                card.className = "table-card";
+
+                card.innerHTML = `
+                    <h2>Miza ${table.id}</h2>
+                    <p>Status: <span class="${table.is_taken ? 'taken' : 'free'}">
+                    ${table.is_taken ? 'Zasedena' : 'Prosta'}</span></p>
+                    ${table.is_taken ? `<button class="done-btn" onclick="releaseTable(${table.id})">Zaključi</button>` : ""}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        async function releaseTable(tableId) {
+            const response = await fetch(`/release_table/${tableId}`, { method: "POST" });
+
+            if (response.ok) {
+                alert(`Miza ${tableId} je sproščena.`);
+                fetchTables(); // Osveži seznam
+            } else {
+                alert("Napaka pri sproščanju mize!");
+            }
+        }
+
+        // Na zagon strani naloži stanje miz
+        fetchTables();
+    </script>
+
+</body>
+</html>

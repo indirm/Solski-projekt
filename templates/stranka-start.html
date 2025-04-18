@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,25 +62,30 @@
     <div class="container">
         <h1>Dobrodošli! Pritisnite za številko</h1>
         <button onclick="getCustomerNumber()">Dobi Številko</button>
+
+        <!-- Dodajanje gumba za prehod na seznam miz -->
+        <br><br>
+        <button onclick="window.location.href='/tables'">Poglej seznam miz</button>
+
         <div id="idDisplay" class="id-display"></div>
     </div>
 
     <script>
         async function getCustomerNumber() {
-    const response = await fetch("/get_number", {
-        method: "POST"
-    });
-    const data = await response.json();
+            const response = await fetch("/get_number", {
+                method: "POST"
+            });
+            const data = await response.json();
 
-    const idDisplay = document.getElementById("idDisplay");
-    idDisplay.style.display = "block";
-
-    if (data.number) {
-        idDisplay.textContent = "Vaša miza: " + data.number;
-    } else if (data.error) {
-        idDisplay.textContent = "Vse mize so zasedene!";
-    }
-}
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                const idDisplay = document.getElementById("idDisplay");
+                idDisplay.style.display = "block";
+                idDisplay.textContent = "Vse mize so zasedene.";
+            }
+        }
     </script>
 </body>
 </html>
+
