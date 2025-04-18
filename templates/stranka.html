@@ -67,15 +67,20 @@
 
     <script>
         async function getCustomerNumber() {
-            const response = await fetch("/get_number", {
-                method: "POST"
-            });
-            const data = await response.json();
+    const response = await fetch("/get_number", {
+        method: "POST"
+    });
+    const data = await response.json();
 
-            const idDisplay = document.getElementById("idDisplay");
-            idDisplay.style.display = "block";
-            idDisplay.textContent = "Vaša številka: " + data.number;
-        }
+    const idDisplay = document.getElementById("idDisplay");
+    idDisplay.style.display = "block";
+
+    if (data.number) {
+        idDisplay.textContent = "Vaša miza: " + data.number;
+    } else if (data.error) {
+        idDisplay.textContent = "Vse mize so zasedene!";
+    }
+}
     </script>
 </body>
 </html>
