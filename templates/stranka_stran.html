@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Stranka - Stran</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold text-center">Dobrodošel, Stranka (Miza {{ stevilka_mize }})</h1>
+        <p class="text-center mt-4">To je tvoja stran. Več funkcij bo dodanih kasneje!</p>
+        <a href="{{ url_for('stranka_odhod') }}" class="block text-center mt-6 text-blue-500">Nazaj na začetek</a>
+    </div>
+</body>
+</html>

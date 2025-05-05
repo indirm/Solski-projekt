@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Prijava - {{ vloga|capitalize }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold text-center">Prijava kot {{ vloga|capitalize }}</h1>
+        <form method="POST" class="max-w-md mx-auto mt-6">
+            <div class="mb-4">
+                <label for="uporabnisko_ime" class="block text-sm font-medium">Uporabniško ime</label>
+                <input type="text" name="uporabnisko_ime" id="uporabnisko_ime" class="w-full border rounded p-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="geslo" class="block text-sm font-medium">Geslo</label>
+                <input type="password" name="geslo" id="geslo" class="w-full border rounded p-2" required>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full">Prijavi se</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="list-disc pl-5 mt-4 text-red-500">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('start') }}" class="block text-center mt-6 text-blue-500">Nazaj na začetek</a>
+    </div>
+</body>
+</html>
