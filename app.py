@@ -1,6 +1,6 @@
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from tinydb import TinyDB, Query
-import os
 
 app = Flask(__name__)
 app.secret_key = "preprost-kljuc"
@@ -8,6 +8,8 @@ app.secret_key = "preprost-kljuc"
 db = TinyDB("baza.json")
 uporabniki_tabela = db.table("uporabniki")
 mize_tabela = db.table("mize")
+menu_tabela = db.table("menu")
+narocila_tabela = db.table("narocila")
 
 if not mize_tabela.all():
     for i in range(1,31):
@@ -16,6 +18,14 @@ if not mize_tabela.all():
 if not uporabniki_tabela.all():
     uporabniki_tabela.insert({"uporabnisko_ime" : "natakar1", "geslo":"natakar123", "vloga":"natakar"})
     uporabniki_tabela.insert({"uporabnisko_ime" : "kuhar1", "geslo":"kuhar123", "vloga":"kuhar"})
+
+if not menu_tabela.all():
+    menu_tabela.insert_multiple([
+        {"ime_jedi": "Margherita Pizza", "cena": 8.50},
+        {"ime_jedi": "Spaghetti Bolognese", "cena": 9.00},
+        {"ime_jedi": "Caesar Salad", "cena": 6.50},
+        {"ime_jedi": "Tiramisu", "cena": 4.50}
+    ])
 
 @app.route("/")
 def start():
@@ -52,10 +62,27 @@ def stranka_miza():
             return redirect(url_for('stranka_miza'))
     return render_template('stranka_miza.html')
 
-@app.route('/stranka_stran')
+@app.route('/stranka_stran', methods=['GET', 'POST'])
 def stranka_stran():
     stevilka_mize = app.config.get('stevilka_mize', 'Neznano')
-    return render_template('stranka_stran.html', stevilka_mize=stevilka_mize)
+    menu = menu_tabela.all()
+    print("Menu items:", menu)
+
+    if request.method == 'POST':
+        izbrane_jedi = request.form.getlist('jedi')
+        if izbrane_jedi:
+            narocila_tabela.insert({
+                "stevilka_mize": stevilka_mize,
+                "jedi": izbrane_jedi,
+                "status": "v čakanju",
+                "cas": str(datetime.datetime.now())
+            })
+            flash('Naročilo oddano! Natakar bo kmalu pri vas.')
+            return redirect(url_for('stranka_stran'))
+        else:
+            flash('Izberite vsaj eno jed.')
+
+    return render_template('stranka_stran.html', stevilka_mize=stevilka_mize, menu=menu)
 
 @app.route('/prijava/<vloga>', methods=['GET', 'POST'])
 def prijava(vloga):
@@ -73,19 +100,37 @@ def prijava(vloga):
             return redirect(url_for('prijava', vloga=vloga))
     return render_template('prijava.html', vloga=vloga)
 
-@app.route('/natakar_stran')
+@app.route('/natakar_stran', methods=['GET', 'POST'])
 def natakar_stran():
     if app.config.get('vloga_uporabnika') != 'natakar':
         flash('Prijavi se kot Natakar.')
         return redirect(url_for('prijava', vloga='natakar'))
-    return render_template('natakar_stran.html')
+    
+    if request.method == 'POST':
+        narocilo_id = request.form.get('narocilo_id')
+        Narocilo = Query()
+        narocila_tabela.update({'status': 'dostavljeno'}, Narocilo.doc_id == int(narocilo_id))
+        flash('Naročilo označeno kot dostavljeno.')
+        return redirect(url_for('natakar_stran'))
+    
+    narocila = narocila_tabela.all()
+    return render_template('natakar_stran.html', narocila=narocila)
 
-@app.route('/kuhar_stran')
+@app.route('/kuhar_stran', methods=['GET', 'POST'])
 def kuhar_stran():
     if app.config.get('vloga_uporabnika') != 'kuhar':
         flash('Prijavi se kot Kuhar.')
         return redirect(url_for('prijava', vloga='kuhar'))
-    return render_template('kuhar_stran.html')
+    
+    if request.method == 'POST':
+        narocilo_id = request.form.get('narocilo_id')
+        Narocilo = Query()
+        narocila_tabela.update({'status': 'pripravljeno'}, Narocilo.doc_id == int(narocilo_id))
+        flash('Naročilo označeno kot pripravljeno.')
+        return redirect(url_for('kuhar_stran'))
+    
+    narocila = narocila_tabela.all()
+    return render_template('kuhar_stran.html', narocila=narocila)
 
 @app.route('/odjava')
 def odjava():
@@ -113,10 +158,5 @@ def pobrisi_mize():
     mize_tabela.update({"zasedana" : False})
     flash("vse mize so proste")
     return redirect(url_for("natakar_stran"))
-
-@app.route('/api/mize', methods=['GET'])
-def api_mize():
-    mize = [{'stevilka_mize': m['stevilka_mize'], 'zasedena': m['zasedena']} for m in mize_tabela.all()]
-    return jsonify(mize)
 
 app.run(debug=True)

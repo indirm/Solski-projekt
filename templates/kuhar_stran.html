@@ -8,7 +8,28 @@
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold text-center">Dobrodošel, Kuhar</h1>
-        <p class="text-center mt-4">To je tvoja stran. Več funkcij bo dodanih kasneje!</p>
+        
+        <h2 class="text-xl font-semibold mt-6">Naročila</h2>
+        {% if narocila %}
+            <div class="mt-4">
+                {% for narocilo in narocila %}
+                    {% if narocilo.status == 'v čakanju' %}
+                        <div class="border p-4 mb-4 rounded">
+                            <p><strong>Miza:</strong> {{ narocilo.stevilka_mize }}</p>
+                            <p><strong>Jedi:</strong> {{ narocilo.jedi | join(', ') }}</p>
+                            <p><strong>Čas:</strong> {{ narocilo.cas }}</p>
+                            <form method="POST">
+                                <input type="hidden" name="narocilo_id" value="{{ narocilo.doc_id }}">
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-2">Označi kot pripravljeno</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center mt-4">Ni aktivnih naročil.</p>
+        {% endif %}
+
         <a href="{{ url_for('odjava') }}" class="block text-center mt-6 text-blue-500">Odjavi se</a>
     </div>
 </body>
