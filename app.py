@@ -159,4 +159,4 @@ def pobrisi_mize():
     flash("vse mize so proste")
     return redirect(url_for("natakar_stran"))
 
-app.run(debug=True)
+app.run(debug=True)   
