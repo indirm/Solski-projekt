@@ -22,15 +22,6 @@
             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-4 w-full">Oddaj naročilo</button>
         </form>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class="list-disc pl-5 mt-4 text-red-500">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
         <a href="{{ url_for('stranka_odhod') }}" class="block text-center mt-6 text-blue-500">Zapusti mizo</a>
     </div>
 </body>

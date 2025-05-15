@@ -13,17 +13,19 @@
         {% if narocila %}
             <div class="mt-4">
                 {% for narocilo in narocila %}
-                    {% if narocilo.status == 'v čakanju' %}
-                        <div class="border p-4 mb-4 rounded">
-                            <p><strong>Miza:</strong> {{ narocilo.stevilka_mize }}</p>
-                            <p><strong>Jedi:</strong> {{ narocilo.jedi | join(', ') }}</p>
-                            <p><strong>Čas:</strong> {{ narocilo.cas }}</p>
-                            <form method="POST">
-                                <input type="hidden" name="narocilo_id" value="{{ narocilo.doc_id }}">
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-2">Označi kot pripravljeno</button>
-                            </form>
-                        </div>
-                    {% endif %}
+                    <div class="border p-4 mb-4 rounded">
+        <p><strong>Miza:</strong> {{ narocilo.stevilka_mize }}</p>
+        <p><strong>Jedi:</strong> {{ narocilo.jedi | join(', ') }}</p>
+        <p><strong>Status:</strong> {{ narocilo.status }}</p>
+        <p><strong>Čas:</strong> {{ narocilo.cas }}</p>
+        <p><strong>Doc ID:</strong> {{ narocilo.doc_id }}</p> <!-- Debug: Show doc_id -->
+        {% if narocilo.status == 'v čakanju' %}
+            <form method="POST">
+                <input type="hidden" name="narocilo_id" value="{{ narocilo.doc_id }}">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-2">Označi kot pripravljeno</button>
+            </form>
+        {% endif %}
+    </div>
                 {% endfor %}
             </div>
         {% else %}

@@ -1,6 +1,6 @@
 import datetime
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from tinydb import TinyDB, Query
+from flask import Flask, render_template, request, redirect, url_for, flash
+from tinydb import TinyDB, Query 
 
 app = Flask(__name__)
 app.secret_key = "preprost-kljuc"
@@ -38,9 +38,6 @@ def izberi_vlogo():
         return redirect(url_for('stranka_miza'))
     elif vloga in ['natakar', 'kuhar']:
         return redirect(url_for('prijava', vloga=vloga))
-    else:
-        flash('Izberi veljavno vlogo.')
-        return redirect(url_for('start'))
     
 @app.route("/stranka_miza", methods = ["GET", "POST"])
 def stranka_miza():
@@ -66,22 +63,22 @@ def stranka_miza():
 def stranka_stran():
     stevilka_mize = app.config.get('stevilka_mize', 'Neznano')
     menu = menu_tabela.all()
-    print("Menu items:", menu)
-
+    
     if request.method == 'POST':
         izbrane_jedi = request.form.getlist('jedi')
         if izbrane_jedi:
-            narocila_tabela.insert({
+            inserted_id = narocila_tabela.insert({
                 "stevilka_mize": stevilka_mize,
                 "jedi": izbrane_jedi,
                 "status": "v čakanju",
                 "cas": str(datetime.datetime.now())
             })
+            inserted_order = narocila_tabela.get(doc_id=inserted_id)
             flash('Naročilo oddano! Natakar bo kmalu pri vas.')
             return redirect(url_for('stranka_stran'))
         else:
             flash('Izberite vsaj eno jed.')
-
+    
     return render_template('stranka_stran.html', stevilka_mize=stevilka_mize, menu=menu)
 
 @app.route('/prijava/<vloga>', methods=['GET', 'POST'])

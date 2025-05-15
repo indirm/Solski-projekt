@@ -1,25 +1,36 @@
 # Solski-projekt
 
-Razvijam celovito aplikacijo za restavracije, ki omogoča učinkovito upravljanje zaposlenih in izboljšano izkušnjo za goste. Vsak zaposleni ima prilagojen uporabniški vmesnik glede na svojo vlogo, vse funkcionalnosti pa so povezane v enoten sistem, ki zagotavlja tekoče delovanje restavracije in optimizacijo storitev.
+izvir problema:
+V večini restavracij komunikacija med osebjem poteka ustno ali prek papirnatih listkov kar pogosto povzroči:
+x napačno izvedene naloge,
+x izgubljene informacije,
+x zamude pri strežbi in dostavi.
 
-Glavne funkcionalnosti po vlogah:
-Kuhar
-Seznam aktivnih naročil s časovnimi oznakami in statusom.
-Možnost ogleda receptov za pripravo posamezne jedi.
-Označevanje dokončanih jedi, kar sproži obvestilo natakarju.
+Rešitev:
+Razvil bom preprosto in učinkovito spletno aplikacijo ki omogoča:
+x dodeljevanje in sledenje nalogam po vlogah,
+x izboljšano organizacijo dela in manj napak.
 
-Skupne funkcionalnosti
-Vse aktivnosti se beležijo in arhivirajo v SQL bazi za kasnejšo analizo in optimizacijo poslovanja.
+Ciljna skupina:
+x majhne, srednje restavracije brez digitalnega sistema,
+x nove restavracije, ki želijo izboljšati organizacijo,
+x tisti ki iščejo enostavno rešitev brez velikih stroškov.
 
-Funkcionalnosti za stranko (gost)
-Klic natakarja preko aplikacije.
-Spremljanje naročila z napredkom priprave (progress bar).
-Pregled parkirišča z dostopom do kamer, ki snemajo njihov avtomobil.
+Z analizo trga sam ugotovil:
+x več kot 60 % manjših gostinskih obratov v Sloveniji še vedno uporablja ustne metode
 
-Prednosti aplikacije
-Večja organiziranost znotraj ekipe.
-Večja preglednost nad pripravo hrane.
-Avtomatizirano arhiviranje podatkov omogoča dolgoročno analizo in optimizacijo procesov.
+Konkurenčne rešitve:
+x Trello: univerzalna orodje, ni prilagojen restavracijam,
+x POS sistemi: večinoma vključujejo le naročila hrane.
 
-slabosti: Nima velikega vpliva, bolj je za izgled ne pa funkcionalnost, kuharji bi morali slediti receptu in po vsakem koraku zabeležit.
-konkurence: ne da bi vedo.
+Konkurenčne prednosti naše rešitve:
+x enostavna uporaba za starejše zaposlene,
+x posebej prilagojena vlogam v restavraciji,
+x cenejša,
+x omogoča takojšen začetek uporabe brez namestitve.
+
+SWOT analiza
+Prednosti = Enostavna uporaba,  drez potrebe po namestitvi
+Slabosti = novo
+Priložnosti = Digitalizacija malih gostincev
+Nevarnosti = nezaupanje.
